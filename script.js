@@ -1,9 +1,39 @@
 'use strict';
 
 function plus(a, b) {
-    let result = a + b;
-    return result;
+    try {
+        if (typeof(a) == 'string' && typeof(b) == 'number') {
+            throw "a is not a number";
+        } else if (typeof(a) == 'number' && typeof(b) == 'string') {
+            throw "b is not a number";
+        } else {
+            let result = a + b;
+            return result;
+        }
+    }
+    catch(err) {
+        console.log(err.message);
+    }
+    finally {
+        console.log('finish');
+    }
 }
+/* 
+function test() {
+    try {
+        plus('hello', 1)
+    }
+    catch(error) {
+        console.log(error.message);
+    }
+    finally {
+        console.log('finish');
+    }
+} */
+console.log(plus('hello', 1));
+console.log(plus(10, 1));
+
+
 // 1. если не 2 интеджера
 function testTwoInt() {
    if (plus(10, 1) !== 11) {
