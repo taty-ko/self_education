@@ -1,35 +1,28 @@
 'use strict';
-
-function plus(a, b) {
-    try {
-        if (typeof(a) == 'string' && typeof(b) == 'number') {
-            throw "a is not a number";
-        } else if (typeof(a) == 'number' && typeof(b) == 'string') {
-            throw "b is not a number";
-        } else {
-            let result = a + b;
-            return result;
-        }
-    }
-    catch(err) {
-        console.log(err.message);
-    }
-    finally {
-        console.log('finish');
+class Error {
+    constructor(message) {
+        this.message = message;
     }
 }
-/* 
-function test() {
-    try {
-        plus('hello', 1)
+
+function plus(a, b) {
+    if (typeof(a) == 'string' && typeof(b) == 'number') {
+        throw new Error('a is not a number');
+    } else if (typeof(a) == 'number' && typeof(b) == 'string') {
+        throw new Error('b is not a number');
+    } else {
+        let result = a + b;
+        return result;
     }
-    catch(error) {
-        console.log(error.message);
-    }
-    finally {
-        console.log('finish');
-    }
-} */
+}
+try {
+    plus('a', 2);
+    plus(2, 2);
+}
+catch(error) {
+    console.log(error.message);
+}
+
 console.log(plus('hello', 1));
 console.log(plus(10, 1));
 
@@ -111,3 +104,14 @@ function testNotError() {
 console.log(plus(10, 3));
 console.log(plus(9, null));
 console.log(plus('str', 1));
+
+
+function isThereAnError(){
+    try {
+      console.log("All good, no errors") 
+       throw new Error('**ooops**') 
+    } catch(error) {
+      console.log("We have an error", error.message)
+    }
+  }
+  console.log(isThereAnError());
