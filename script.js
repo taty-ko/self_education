@@ -6,112 +6,76 @@ class Error {
 }
 
 function plus(a, b) {
-    if (typeof(a) == 'string' && typeof(b) == 'number') {
-        throw new Error('a is not a number');
-    } else if (typeof(a) == 'number' && typeof(b) == 'string') {
-        throw new Error('b is not a number');
-    } else {
+    if ((typeof(a) !== 'string' && typeof(b) !== 'string') ||
+        (typeof(a) !== 'number' && typeof(b) !== 'number') || 
+        (typeof(a) !== Array.isArray([]) && typeof(b) !== Array.isArray([]))) {
+        throw new Error('Arguments are not valid.')
+    } 
         let result = a + b;
         return result;
-    }
 }
-try {
-    plus('a', 2);
-    plus(2, 2);
-}
-catch(error) {
-    console.log(error.message);
-}
-
-console.log(plus('hello', 1));
-console.log(plus(10, 1));
-
-
-// 1. если не 2 интеджера
-function testTwoInt() {
-   if (plus(10, 1) !== 11) {
-    console.log('Test not passed.');
-   }
-}
-// 2. если строка и инт или инт и строка
-function testStrInt() {
-    if (typeof(plus('str' + 1) || plus(1 + 'str')) !== 'number') {
-        console.log('Test not passed.');
-    }
-}
-// 3. если первый аргумент null, а второй инт
-function testNullInt() {
-    plus(null, 1);
-    if (a == null) {
-        console.log('Test not passed. null');
-    }
-}
-// 4. если первый аргумент инт, а второй null
-function testIntNull() {
-    plus(1, null);
-    if (b == null) {
-        console.log('Test not passed. null');
-    }
-}
-// 5. если оба аргумента строки
-function testStrStr() {
-   if (plus('str', 'str') !== 'strstr') {
-    console.log('Test not passed. str + str');
-   }
-}
-// 6. если первый  - undefined, а второй инт
-function testUndefFirstArg() {
-    plus(undefined, 2);
-    if (a == undefined) {
-        console.log('Test not passed. a == undefined');
-    }
-}
-// 7. если второй  - undefined.
-function testUndefSecondArg() {
-    plus(2, undefined);
-    if (b == undefined) {
-        console.log('Test not passed. b == undefined');
-    }
-}
-// 8. если оба undefined
-function testUndefined() {
-    plus(undefined, undefined);
-    if (a == undefined && b == undefined) {
-        console.log('Test not passed. Both arguments are undefined');
-    } 
-}
-// 9. оба null
-function testNull() {
-    plus(null, null);
-    if (a == null && b == null) {
-        console.log('Test not passed. Both arguments are null');
-    } 
-}
-// 10. без ошибок 
-function testNotError() {
-    plus(a, b);
-    if (typeof(a) === 'number' && typeof(b) === 'number') {
-        console.log('Both arguments are a number.');
-    } else if (typeof(a) === 'string' && typeof(b) === 'string') {
-        console.log('Both arguments are a string.');
-    } else if (typeof(a) === 'array' && typeof(b) === 'array') {
-        console.log('Both arguments are a array.');
-    } else {
-        console.log('Cases are not included to Test');
-    }
-}
-
-console.log(plus(10, 3));
-console.log(plus(9, null));
-console.log(plus('str', 1));
-
-
-function isThereAnError(){
+//тест для кейсов со строкой
+function testStr() {
     try {
-      console.log("All good, no errors") 
-       throw new Error('**ooops**') 
-    } catch(error) {
-      console.log("We have an error", error.message)
+       (plus('str', 2) ||
+        plus('str', []) ||
+        plus('str', {}) ||
+        plus(2, 'str') ||
+        plus([], 'str') ||
+        plus({}, 'str'))
     }
-  }
-  console.log(isThereAnError());
+    catch(error) {
+        console.log(error.message);
+    }
+}
+console.log(testStr());
+//тест для кейсов с объектами
+function testObj() {
+    try {
+        (plus({}, 2) ||
+        plus({}, []) ||
+        plus({}, {}) ||
+        plus(2, {}) ||
+        plus([], {}) ||
+        plus({}, {}))
+    }
+    catch(error) {
+        console.log(error.message);
+    }
+}
+//тест для кейсов с массивами
+function testArr() {
+    try {
+        (plus([], 2) ||
+        plus([], {}) ||
+        plus(2, []) ||
+        plus({}, []))
+    }
+    catch(error) {
+        console.log(error.message);
+    }
+}
+//тест для кейсов с пустой строкой
+function testEmpty() {
+    try {
+       (plus('', 'str') || 
+        plus('', {}) || 
+        plus('', []) || 
+        plus('', 10) || 
+        plus('str', '') || 
+        plus({}, '') || 
+        plus([], '') || 
+        plus(10, ''))
+    }
+    catch(error) {
+        console.log(error.message);
+    }
+}
+
+console.log(testStr());
+console.log(testArr());
+console.log(testObj());
+console.log(testEmpty());
+let positive = plus(10, 1);
+console.log(positive);
+
