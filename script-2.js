@@ -40,3 +40,10 @@ let storeDescription = {
     open: true
 }
 console.log(storeDescription);
+
+
+if (4 !== 9) {
+    console.log('NOT equal');
+} else {
+    console.log('OK equal');
+}
